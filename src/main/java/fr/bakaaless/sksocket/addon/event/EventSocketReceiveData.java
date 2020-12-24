@@ -1,0 +1,38 @@
+package fr.bakaaless.sksocket.addon.event;
+
+import fr.bakaaless.sksocket.addon.type.AdaptSocket;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
+
+public class EventSocketReceiveData extends Event {
+
+    private static final HandlerList HANDLERS = new HandlerList();
+
+    private final AdaptSocket socket;
+    private final String data;
+
+    public EventSocketReceiveData(final AdaptSocket socket, final String data) {
+        super(true);
+        this.socket = socket;
+        this.data = data;
+    }
+
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return HANDLERS;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
+    public AdaptSocket getSocket() {
+        return socket;
+    }
+
+    public String getData() {
+        return data;
+    }
+}

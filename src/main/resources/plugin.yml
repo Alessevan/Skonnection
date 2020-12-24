@@ -1,0 +1,8 @@
+name: SkSocket
+main: fr.bakaaless.sksocket.plugin.SkSocket
+version: 0.0.1-ALPHA
+api-version: 1.16
+depend:
+  - Skript
+author:
+  - Aless#6161
