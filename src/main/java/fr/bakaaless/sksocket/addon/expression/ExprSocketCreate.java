@@ -45,7 +45,8 @@ public class ExprSocketCreate extends SimpleExpression<AdaptSocket> {
         } catch (SocketException socketException){
             Skript.exception(socketException, "Can't join the server").printStackTrace();
             return new AdaptSocket[0];
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            Skript.exception(ex, ex.getLocalizedMessage()).printStackTrace();
             return new AdaptSocket[0];
         }
         return new AdaptSocket[] {new AdaptSocket(socket)};

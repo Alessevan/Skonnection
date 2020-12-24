@@ -1,34 +1,24 @@
 package fr.bakaaless.sksocket.addon.expression;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import fr.bakaaless.sksocket.addon.type.AdaptClient;
 import fr.bakaaless.sksocket.addon.type.AdaptServerSocket;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.net.*;
+public class ExprClientServer extends SimpleExpression<AdaptServerSocket> {
 
-public class ExprServerCreate extends SimpleExpression<AdaptServerSocket> {
-
-    private Expression<Integer> port;
+    private Expression<AdaptClient> client;
 
     @Override
     protected AdaptServerSocket[] get(final @NotNull Event e) {
-        if (this.port == null || this.port.getSingle(e) == null)
+        if (this.client == null || this.client.getSingle(e) == null)
             return new AdaptServerSocket[0];
-        ServerSocket socket;
-        try {
-            final int port = Integer.parseInt(this.port.getSingle(e).toString());
-            socket = new ServerSocket(port);
-        } catch (Exception ex) {
-            Skript.exception(ex, ex.getLocalizedMessage()).printStackTrace();
-            return new AdaptServerSocket[0];
-        }
-        return new AdaptServerSocket[] {new AdaptServerSocket(socket)};
+        return new AdaptServerSocket[] {client.getSingle(e).getServer()};
     }
 
     @Override
@@ -43,12 +33,12 @@ public class ExprServerCreate extends SimpleExpression<AdaptServerSocket> {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "create a server socket";
+        return "get client's server";
     }
 
     @Override
     public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
-        port = (Expression<Integer>) exprs[0];
+        this.client = (Expression<AdaptClient>) exprs[0];
         return true;
     }
 

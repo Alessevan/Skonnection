@@ -70,7 +70,7 @@ public class AdaptSocket {
     }
 
     public boolean isConnected() {
-        return this.getSocket() != null && this.getSocket().isConnected() && !this.getSocket().isConnected();
+        return this.getSocket() != null && this.getSocket().isConnected() && !this.getSocket().isClosed();
     }
 
     public void connect(final Socket socket) {

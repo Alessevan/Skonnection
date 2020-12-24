@@ -11,12 +11,12 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import fr.bakaaless.sksocket.addon.condition.CondSocketConnected;
-import fr.bakaaless.sksocket.addon.effect.EffSocketDestroy;
-import fr.bakaaless.sksocket.addon.effect.EffSocketDisconnect;
-import fr.bakaaless.sksocket.addon.effect.EffSocketSendData;
+import fr.bakaaless.sksocket.addon.effect.*;
+import fr.bakaaless.sksocket.addon.event.EventServerReceiveConnection;
+import fr.bakaaless.sksocket.addon.event.EventServerReceiveData;
 import fr.bakaaless.sksocket.addon.event.EventSocketReceiveData;
-import fr.bakaaless.sksocket.addon.expression.ExprSocketCreate;
-import fr.bakaaless.sksocket.addon.expression.ExprSocketUUID;
+import fr.bakaaless.sksocket.addon.expression.*;
+import fr.bakaaless.sksocket.addon.type.AdaptClient;
 import fr.bakaaless.sksocket.addon.type.AdaptServerSocket;
 import fr.bakaaless.sksocket.addon.type.AdaptSocket;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class SkSocket extends JavaPlugin {
 
@@ -61,7 +62,7 @@ public class SkSocket extends JavaPlugin {
 
                             @Override
                             public String toString(final AdaptSocket socket, final int flags) {
-                                return socket.getUniqueId().toString();
+                                return socket.toString();
                             }
 
                             @Override
@@ -76,10 +77,10 @@ public class SkSocket extends JavaPlugin {
                         })
         );
         Classes.registerClass(
-                new ClassInfo<>(AdaptServerSocket.class, "socketserver")
-                        .user("socketservers?")
-                        .name("SocketServer")
-                        .description("Represents a java socketserver")
+                new ClassInfo<>(AdaptServerSocket.class, "serversocket")
+                        .user("serversockets?")
+                        .name("ServerSocket")
+                        .description("Represents a java serversocket")
                         .parser(new Parser<AdaptServerSocket>() {
 
                             @Nullable
@@ -101,7 +102,7 @@ public class SkSocket extends JavaPlugin {
 
                             @Override
                             public @NotNull String toString(final @NotNull AdaptServerSocket socket, final int flags) {
-                                return socket.getUniqueId().toString();
+                                return socket.toString();
                             }
 
                             @Override
@@ -115,11 +116,61 @@ public class SkSocket extends JavaPlugin {
                             }
                         })
         );
+        Classes.registerClass(
+                new ClassInfo<>(AdaptClient.class, "clientsocket")
+                        .user("clientsockets?")
+                        .name("ClientSocket")
+                        .description("Represents a java clientsocket")
+                        .parser(new Parser<AdaptClient>() {
+
+                            @Nullable
+                            @Override
+                            public AdaptClient parse(final String uuid, final ParseContext context, final ParserInstance pi) {
+                                return this.parse(uuid, context);
+                            }
+
+                            @Nullable
+                            @Override
+                            public AdaptClient parse(final @NotNull String uuid, final @NotNull ParseContext context) {
+                                try {
+                                    final UUID realUUID = UUID.fromString(uuid);
+                                    return AdaptServerSocket.getSkriptServers().stream()
+                                            .map(server ->
+                                                    server.getClients().stream()
+                                                            .filter(adaptClient -> adaptClient.getUniqueId().equals(realUUID))
+                                                            .findFirst()
+                                                            .get()
+                                            )
+                                            .findFirst().get();
+                                } catch (IllegalArgumentException ignored) {
+                                }
+                                return null;
+                            }
+
+                            @Override
+                            public @NotNull String toString(final @NotNull AdaptClient client, final int flags) {
+                                return client.toString();
+                            }
+
+                            @Override
+                            public @NotNull String toVariableNameString(final @NotNull AdaptClient client) {
+                                return client.getUniqueId().toString();
+                            }
+
+                            @Override
+                            public @NotNull String getVariableNamePattern() {
+                                return ".+";
+                            }
+                        })
+        );
         Skript.registerCondition(CondSocketConnected.class, "%socket% is connected", "%socket%'s connected", "%socket% is connect", "%socket%'s connect", "%socket% connected", "%socket% connect");
-        Skript.registerEffect(EffSocketSendData.class, "send data %string% to [socket ]%socket%");
+        Skript.registerEffect(EffSocketSendData.class, "send data %string% from [socket ]%socket%");
         Skript.registerEffect(EffSocketDestroy.class, "destroy [socket ]%socket%");
         Skript.registerEffect(EffSocketDisconnect.class, "disconnect [socket ]%socket%");
-        Skript.registerEvent("Socket Receive Data Event", SimpleEvent.class, EventSocketReceiveData.class, "[socket ]receive data[ async]");
+        Skript.registerEffect(EffServerSendData.class, "send data %string% from [server |serversocket |server socket ]%serversocket% [to %clientsocket%]");
+        Skript.registerEffect(EffServerDisconnect.class, "destroy [server |serversocket |server socket ]%serversocket%");
+        Skript.registerEffect(EffServerDestroy.class, "disconnect [server |serversocket |server socket ]%serversocket%");
+        Skript.registerEvent("Socket Receive Data Event", SimpleEvent.class, EventSocketReceiveData.class, "socket receive data[ async]");
         EventValues.registerEventValue(EventSocketReceiveData.class, AdaptSocket.class, new Getter<AdaptSocket, EventSocketReceiveData>() {
             @Nullable
             @Override
@@ -134,13 +185,57 @@ public class SkSocket extends JavaPlugin {
                 return event.getData();
             }
         }, 0);
+        Skript.registerEvent("Client Attempt To Connect", SimpleEvent.class, EventServerReceiveConnection.class, "[client ]attempt to connect[on server][ async]");
+        EventValues.registerEventValue(EventServerReceiveConnection.class, AdaptServerSocket.class, new Getter<AdaptServerSocket, EventServerReceiveConnection>() {
+            @Nullable
+            @Override
+            public AdaptServerSocket get(final @NotNull EventServerReceiveConnection event) {
+                return event.getServer();
+            }
+        }, 0);
+        EventValues.registerEventValue(EventServerReceiveConnection.class, AdaptClient.class, new Getter<AdaptClient, EventServerReceiveConnection>() {
+            @Nullable
+            @Override
+            public AdaptClient get(final @NotNull EventServerReceiveConnection event) {
+                return event.getClient();
+            }
+        }, 0);
+        Skript.registerEvent("ServerSocket Receive Data", SimpleEvent.class, EventServerReceiveData.class, "server[ ][socket] receive data[ async]");
+        EventValues.registerEventValue(EventServerReceiveData.class, AdaptServerSocket.class, new Getter<AdaptServerSocket, EventServerReceiveData>() {
+            @Nullable
+            @Override
+            public AdaptServerSocket get(final @NotNull EventServerReceiveData event) {
+                return event.getServer();
+            }
+        }, 0);
+        EventValues.registerEventValue(EventServerReceiveData.class, AdaptClient.class, new Getter<AdaptClient, EventServerReceiveData>() {
+            @Nullable
+            @Override
+            public AdaptClient get(final @NotNull EventServerReceiveData event) {
+                return event.getClient();
+            }
+        }, 0);
+        EventValues.registerEventValue(EventServerReceiveData.class, String.class, new Getter<String, EventServerReceiveData>() {
+            @Nullable
+            @Override
+            public String get(final @NotNull EventServerReceiveData event) {
+                return event.getData();
+            }
+        }, 0);
         Skript.registerExpression(ExprSocketCreate.class, AdaptSocket.class, ExpressionType.SIMPLE, "create [client ]socket [to ]%string%");
-        Skript.registerExpression(ExprSocketUUID.class, String.class, ExpressionType.SIMPLE, "uuid of %socket%", "%socket%'s uuid");
-        Skript.registerExpression(ExprSocketUUID.class, String.class, ExpressionType.SIMPLE, "ip of %socket%", "%socket%'s ip");
+        Skript.registerExpression(ExprServerCreate.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "create server[ ][socket] [with port ]%integer%");
+        Skript.registerExpression(ExprSocketUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of socket %socket%", "[get ]socket %socket%'s uuid");
+        Skript.registerExpression(ExprSocketIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of socket %socket%", "[get ]socket %socket%'s ip");
+        Skript.registerExpression(ExprSocketUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s uuid");
+        Skript.registerExpression(ExprServerClients.class, AdaptClient.class, ExpressionType.SIMPLE, "[get ]client[s] of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s client[s]");
+        Skript.registerExpression(ExprClientUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of client %clientsocket%", "[get ]client %clientsocket%'s uuid");
+        Skript.registerExpression(ExprClientIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of client %clientsocket%", "[get ]client %clientsocket%'s ip");
+        Skript.registerExpression(ExprClientServer.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "[get ]server of client %clientsocket%", "[get ]client %clientsocket%'s server");
     }
 
     @Override
     public void onDisable() {
-        AdaptSocket.getSkriptSockets().forEach(AdaptSocket::disconnectAndRemove);
+        AdaptSocket.getSkriptSockets().forEach(AdaptSocket::disconnect);
+        AdaptServerSocket.getSkriptServers().forEach(AdaptServerSocket::disconnect);
     }
 }

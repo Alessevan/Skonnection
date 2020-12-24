@@ -1,20 +1,24 @@
 package fr.bakaaless.sksocket.addon.event;
 
+import fr.bakaaless.sksocket.addon.type.AdaptClient;
+import fr.bakaaless.sksocket.addon.type.AdaptServerSocket;
 import fr.bakaaless.sksocket.addon.type.AdaptSocket;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class EventSocketReceiveData extends Event {
+public class EventServerReceiveData extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    private final AdaptSocket socket;
+    private final AdaptServerSocket server;
+    private final AdaptClient client;
     private final String data;
 
-    public EventSocketReceiveData(final AdaptSocket socket, final String data) {
+    public EventServerReceiveData(final AdaptServerSocket server, final AdaptClient client, final String data) {
         super(true);
-        this.socket = socket;
+        this.server = server;
+        this.client = client;
         this.data = data;
     }
 
@@ -28,8 +32,12 @@ public class EventSocketReceiveData extends Event {
         return HANDLERS;
     }
 
-    public AdaptSocket getSocket() {
-        return this.socket;
+    public AdaptServerSocket getServer() {
+        return this.server;
+    }
+
+    public AdaptClient getClient() {
+        return this.client;
     }
 
     public String getData() {
