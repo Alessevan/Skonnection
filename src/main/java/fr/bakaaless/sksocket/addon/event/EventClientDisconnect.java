@@ -11,8 +11,8 @@ public class EventClientDisconnect extends Event {
 
     private final AdaptClient client;
 
-    public EventClientDisconnect(final AdaptClient client) {
-        super(true);
+    public EventClientDisconnect(final AdaptClient client, final boolean async) {
+        super(async);
         this.client = client;
     }
 

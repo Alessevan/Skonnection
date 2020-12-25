@@ -11,8 +11,8 @@ public class EventSocketDisconnect extends Event {
 
     private final AdaptSocket socket;
 
-    public EventSocketDisconnect(final AdaptSocket socket) {
-        super(true);
+    public EventSocketDisconnect(final AdaptSocket socket, final boolean async) {
+        super(async);
         this.socket = socket;
     }
 

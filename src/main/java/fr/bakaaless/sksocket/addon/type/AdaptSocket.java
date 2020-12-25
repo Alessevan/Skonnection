@@ -98,7 +98,7 @@ public class AdaptSocket {
                             final EventSocketReceiveData event = new EventSocketReceiveData(this, data);
                             SkSocket.get().getServer().getPluginManager().callEvent(event);
                         } catch (SocketException e) {
-                            final EventSocketDisconnect event = new EventSocketDisconnect(this);
+                            final EventSocketDisconnect event = new EventSocketDisconnect(this, true);
                             SkSocket.get().getServer().getPluginManager().callEvent(event);
                         } catch (IOException | NullPointerException ignored) {
                         }
@@ -117,6 +117,8 @@ public class AdaptSocket {
             if (this.getSocket().isConnected()) {
                 try {
                     this.getSocket().close();
+                    final EventSocketDisconnect event = new EventSocketDisconnect(this, false);
+                    SkSocket.get().getServer().getPluginManager().callEvent(event);
                 } catch (IOException ignored) {
                 }
             }
@@ -134,10 +136,6 @@ public class AdaptSocket {
             this.getReaderThread().interrupt();
             this.readerThread = null;
         }
-        SkSocket.get().getServer().getScheduler().runTaskAsynchronously(SkSocket.get(), () -> {
-            final EventSocketDisconnect event = new EventSocketDisconnect(this);
-            SkSocket.get().getServer().getPluginManager().callEvent(event);
-        });
     }
 
     public void disconnectAndRemove() {

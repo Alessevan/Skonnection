@@ -3,6 +3,7 @@ package fr.bakaaless.sksocket.plugin;
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
+import ch.njol.skript.classes.Serializer;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.lang.parser.ParserInstance;
@@ -10,6 +11,7 @@ import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
+import ch.njol.yggdrasil.Fields;
 import fr.bakaaless.sksocket.addon.condition.CondSocketConnected;
 import fr.bakaaless.sksocket.addon.effect.*;
 import fr.bakaaless.sksocket.addon.event.*;
@@ -22,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.StreamCorruptedException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -221,7 +225,7 @@ public class SkSocket extends JavaPlugin {
                 return event.getData();
             }
         }, 0);
-        Skript.registerEvent("Socket Disconnect", SimpleEvent.class, EventSocketDisconnect.class, "socket disconnected[ async]");
+        Skript.registerEvent("Socket Disconnect", SimpleEvent.class, EventSocketDisconnect.class, "socket disconnected");
         EventValues.registerEventValue(EventSocketDisconnect.class, AdaptSocket.class, new Getter<AdaptSocket, EventSocketDisconnect>() {
             @Nullable
             @Override
@@ -229,7 +233,7 @@ public class SkSocket extends JavaPlugin {
                 return event.getSocket();
             }
         }, 0);
-        Skript.registerEvent("Client Disconnect", SimpleEvent.class, EventClientDisconnect.class, "client disconnected[ async]");
+        Skript.registerEvent("Client Disconnect", SimpleEvent.class, EventClientDisconnect.class, "client disconnected");
         EventValues.registerEventValue(EventClientDisconnect.class, AdaptClient.class, new Getter<AdaptClient, EventClientDisconnect>() {
             @Nullable
             @Override
@@ -238,10 +242,11 @@ public class SkSocket extends JavaPlugin {
             }
         }, 0);
         Skript.registerExpression(ExprSocketCreate.class, AdaptSocket.class, ExpressionType.SIMPLE, "create [client ]socket [to ]%string%");
-        Skript.registerExpression(ExprServerCreate.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "create server[ ][socket] [with port ]%integer%");
         Skript.registerExpression(ExprSocketUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of socket %socket%", "[get ]socket %socket%'s uuid");
         Skript.registerExpression(ExprSocketIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of socket %socket%", "[get ]socket %socket%'s ip");
-        Skript.registerExpression(ExprSocketUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s uuid");
+        Skript.registerExpression(ExprServerCreate.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "create server[ ][socket] [with port ]%integer%");
+        Skript.registerExpression(ExprServerUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s uuid");
+        Skript.registerExpression(ExprServerPort.class, Integer.class, ExpressionType.SIMPLE, "[get ]port of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s port");
         Skript.registerExpression(ExprServerClients.class, AdaptClient.class, ExpressionType.SIMPLE, "[get ]client[s] of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s client[s]");
         Skript.registerExpression(ExprClientUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of client %clientsocket%", "[get ]client %clientsocket%'s uuid");
         Skript.registerExpression(ExprClientIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of client %clientsocket%", "[get ]client %clientsocket%'s ip");

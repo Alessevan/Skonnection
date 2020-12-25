@@ -68,6 +68,18 @@ public class AdaptServerSocket {
         }
     }
 
+    public void forceDisconnect() {
+        if (!this.getSocket().isClosed()) {
+            try {
+                this.clients.forEach(AdaptClient::forceDisconnect);
+                this.clients.clear();
+                this.connections.interrupt();
+                this.socket.close();
+            } catch (Throwable ignored) {
+            }
+        }
+    }
+
     public void destroy() {
         this.disconnect();
         skriptServers.remove(this);

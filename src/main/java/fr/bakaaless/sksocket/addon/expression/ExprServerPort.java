@@ -9,15 +9,15 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ExprServerUUID extends SimpleExpression<String> {
+public class ExprServerPort extends SimpleExpression<Integer> {
 
     private Expression<AdaptServerSocket> server;
 
     @Override
-    protected String[] get(final @NotNull Event e) {
+    protected Integer[] get(final @NotNull Event e) {
         if (this.server == null || this.server.getSingle(e) == null)
-            return new String[0];
-        return new String[] {this.server.getSingle(e).getUniqueId().toString()};
+            return new Integer[0];
+        return new Integer[] {this.server.getSingle(e).getSocket().getLocalPort()};
     }
 
     @Override
@@ -26,13 +26,13 @@ public class ExprServerUUID extends SimpleExpression<String> {
     }
 
     @Override
-    public @NotNull Class<? extends String> getReturnType() {
-        return String.class;
+    public @NotNull Class<? extends Integer> getReturnType() {
+        return Integer.class;
     }
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "get socket's uuid";
+        return "get server's port";
     }
 
     @Override

@@ -66,7 +66,7 @@ public class AdaptClient {
                 catchData.setDaemon(true);
                 catchData.start();
             } catch (SocketException e) {
-                final EventClientDisconnect event = new EventClientDisconnect(this);
+                final EventClientDisconnect event = new EventClientDisconnect(this, true);
                 SkSocket.get().getServer().getPluginManager().callEvent(event);
             } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
@@ -86,8 +86,22 @@ public class AdaptClient {
                 this.getWriter().close();
                 this.readThread.interrupt();
                 this.server.getClients().remove(this);
-                final EventClientDisconnect event = new EventClientDisconnect(this);
+                final EventClientDisconnect event = new EventClientDisconnect(this, false);
                 SkSocket.get().getServer().getPluginManager().callEvent(event);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void forceDisconnect() {
+        if (!this.getSocket().isClosed()) {
+            try {
+                this.getSocket().close();
+                this.getReader().close();
+                this.getWriter().close();
+                this.readThread.interrupt();
+                this.server.getClients().remove(this);
             } catch (Throwable e) {
                 e.printStackTrace();
             }

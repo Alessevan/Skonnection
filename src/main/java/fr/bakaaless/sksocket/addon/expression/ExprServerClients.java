@@ -23,7 +23,7 @@ public class ExprServerClients extends SimpleExpression<AdaptClient> {
 
     @Override
     public boolean isSingle() {
-        return true;
+        return false;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ExprServerClients extends SimpleExpression<AdaptClient> {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "return all connected clients of a serversocket";
+        return "get all connected clients of a server";
     }
 
     @Override
