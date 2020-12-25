@@ -17,9 +17,7 @@ public class ExprClientIP extends SimpleExpression<String> {
     protected String[] get(final @NotNull Event e) {
         if (this.client == null || this.client.getSingle(e) == null)
             return new String[0];
-        if (!this.client.getSingle(e).isConnected())
-            return new String[0];
-        return new String[] {client.getSingle(e).getSocket().getInetAddress().getHostAddress()};
+        return new String[] {client.getSingle(e).getIp()};
     }
 
     @Override

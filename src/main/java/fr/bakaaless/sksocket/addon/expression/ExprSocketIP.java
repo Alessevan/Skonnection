@@ -19,7 +19,7 @@ public class ExprSocketIP extends SimpleExpression<String> {
             return new String[0];
         if (!this.socket.getSingle(e).isConnected())
             return new String[0];
-        return new String[] {socket.getSingle(e).getSocket().getInetAddress().getHostAddress() + ":" + socket.getSingle(e).getSocket().getPort()};
+        return new String[] {socket.getSingle(e).getIp()};
     }
 
     @Override

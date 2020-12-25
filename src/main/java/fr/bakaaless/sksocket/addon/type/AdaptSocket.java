@@ -1,5 +1,6 @@
 package fr.bakaaless.sksocket.addon.type;
 
+import fr.bakaaless.sksocket.addon.event.EventSocketDisconnect;
 import fr.bakaaless.sksocket.addon.event.EventSocketReceiveData;
 import fr.bakaaless.sksocket.plugin.SkSocket;
 import org.jetbrains.annotations.Nullable;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +30,7 @@ public class AdaptSocket {
 
     private final UUID uniqueId;
     private Socket socket;
+    private String ip;
     private BufferedReader reader;
     private PrintWriter writer;
     private Thread readerThread;
@@ -55,6 +58,11 @@ public class AdaptSocket {
     }
 
     @Nullable
+    public String getIp() {
+        return this.ip;
+    }
+
+    @Nullable
     public PrintWriter getPrintWriter() {
         return this.writer;
     }
@@ -76,6 +84,7 @@ public class AdaptSocket {
     public void connect(final Socket socket) {
         this.disconnect();
         this.socket = socket;
+        this.ip = this.socket.getInetAddress().getHostAddress() + ":" + this.socket.getPort();
         try {
             this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
@@ -84,7 +93,12 @@ public class AdaptSocket {
                     while (this.isConnected()) {
                         try {
                             final String data = this.getBufferedReader().readLine();
+                            if (data == null)
+                                continue;
                             final EventSocketReceiveData event = new EventSocketReceiveData(this, data);
+                            SkSocket.get().getServer().getPluginManager().callEvent(event);
+                        } catch (SocketException e) {
+                            final EventSocketDisconnect event = new EventSocketDisconnect(this);
                             SkSocket.get().getServer().getPluginManager().callEvent(event);
                         } catch (IOException | NullPointerException ignored) {
                         }
@@ -120,6 +134,10 @@ public class AdaptSocket {
             this.getReaderThread().interrupt();
             this.readerThread = null;
         }
+        SkSocket.get().getServer().getScheduler().runTaskAsynchronously(SkSocket.get(), () -> {
+            final EventSocketDisconnect event = new EventSocketDisconnect(this);
+            SkSocket.get().getServer().getPluginManager().callEvent(event);
+        });
     }
 
     public void disconnectAndRemove() {
