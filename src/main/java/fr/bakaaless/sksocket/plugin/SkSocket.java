@@ -165,7 +165,7 @@ public class SkSocket extends JavaPlugin {
                             }
                         })
         );
-        Skript.registerCondition(CondSocketConnected.class, "%socket% is connected", "%socket%'s connected", "%socket% is connect", "%socket%'s connect", "%socket% connected", "%socket% connect");
+        Skript.registerCondition(CondSocketConnected.class, "%socket%[ is|'s] connect[ed]");
         Skript.registerEffect(EffSocketSendData.class, "send data %string% from socket %socket%");
         Skript.registerEffect(EffSocketDestroy.class, "destroy socket %socket%");
         Skript.registerEffect(EffSocketDisconnect.class, "disconnect socket %socket%");

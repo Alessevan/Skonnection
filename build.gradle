@@ -14,11 +14,12 @@ sourceCompatibility = '1.8'
 repositories {
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots' } // Spigot
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' } // Spigot
+    maven { url 'https://papermc.io/repo/repository/maven-public/' } // Paper for Skript
+    maven { url 'https://maven.enginehub.org/repo/' } // WorldEdit / WorldGuard for Skript
+    maven { url 'https://jitpack.io' } // Vault for Skript
     mavenCentral()
     mavenLocal()
     jcenter()
-    maven { url 'https://jitpack.io' }
-    maven { url 'https://papermc.io/repo/repository/maven-public/' }
 }
 
 dependencies {
