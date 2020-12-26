@@ -2,16 +2,16 @@
 
 ## Présentation
 
-➠  Type : Skript's Addon \
+➠  Type : [Skript](https://github.com/SkrptLang/Skript)'s Addon \
 ➠  Développer(s) : [All contributors](https://github.com/BakaAless/SkSocket/graphs/contributors)
 
 
 ## Description
 
-➠  This plugin is a Skript's addon to use java sockets and create ServerSockets.
+➠  This plugin is a [Skript](https://github.com/SkrptLang/Skript)'s addon to use java Socket and create ServerSocket.
 
 * Conditions :
-  * `%socket%[ is|'s] connect[ed]`
+  * `%socket%['s| is] connect[ed]`
 
 
 * Effets :
