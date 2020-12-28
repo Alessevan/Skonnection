@@ -7,7 +7,6 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import fr.bakaaless.sksocket.addon.type.AdaptClient;
 import fr.bakaaless.sksocket.addon.type.AdaptServerSocket;
-import fr.bakaaless.sksocket.addon.type.AdaptSocket;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
