@@ -1,6 +1,8 @@
 package fr.bakaaless.sksocket.addon.expression;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -11,7 +13,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ExprClientIP extends SimpleExpression<String> {
 
+    static {
+        Skript.registerExpression(ExprClientIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of client %clientsocket%", "[get ]client %clientsocket%'s ip");
+    }
+
     private Expression<AdaptClient> client;
+
+    @Override
+    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
+        this.client = (Expression<AdaptClient>) exprs[0];
+        return true;
+    }
 
     @Override
     protected String[] get(final @NotNull Event e) {
@@ -33,12 +45,6 @@ public class ExprClientIP extends SimpleExpression<String> {
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
         return "get client's ip";
-    }
-
-    @Override
-    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
-        this.client = (Expression<AdaptClient>) exprs[0];
-        return true;
     }
 
 }

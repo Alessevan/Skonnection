@@ -1,7 +1,8 @@
 name: SkSocket
 main: fr.bakaaless.sksocket.plugin.SkSocket
-version: 0.0.1-ALPHA
+version: 1.0.1
 api-version: 1.16
+website: 'https://github.com/BakaAless/SkSocket'
 depend:
   - Skript
 author:

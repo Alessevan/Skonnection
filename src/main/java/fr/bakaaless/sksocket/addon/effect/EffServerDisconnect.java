@@ -1,5 +1,6 @@
 package fr.bakaaless.sksocket.addon.effect;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -10,6 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class EffServerDisconnect extends Effect {
+
+    static {
+        Skript.registerEffect(EffServerDestroy.class, "disconnect server[ ][socket] %serversocket%");
+    }
 
     private Expression<AdaptServerSocket> server;
 

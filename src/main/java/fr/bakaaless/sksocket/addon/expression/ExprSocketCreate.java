@@ -2,6 +2,7 @@ package fr.bakaaless.sksocket.addon.expression;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -18,7 +19,17 @@ import java.util.Objects;
 
 public class ExprSocketCreate extends SimpleExpression<AdaptSocket> {
 
+    static {
+        Skript.registerExpression(ExprSocketCreate.class, AdaptSocket.class, ExpressionType.SIMPLE, "create [client ]socket [to ]%string%");
+    }
+
     private Expression<String> ip;
+
+    @Override
+    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
+        ip = (Expression<String>) exprs[0];
+        return true;
+    }
 
     @Override
     protected AdaptSocket[] get(final @NotNull Event e) {
@@ -65,12 +76,6 @@ public class ExprSocketCreate extends SimpleExpression<AdaptSocket> {
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
         return "create a socket and connect it to a server";
-    }
-
-    @Override
-    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
-        ip = (Expression<String>) exprs[0];
-        return true;
     }
 
 }

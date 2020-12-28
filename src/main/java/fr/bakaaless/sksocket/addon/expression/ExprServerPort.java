@@ -1,6 +1,8 @@
 package fr.bakaaless.sksocket.addon.expression;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -11,7 +13,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ExprServerPort extends SimpleExpression<Integer> {
 
+    static {
+        Skript.registerExpression(ExprServerPort.class, Integer.class, ExpressionType.SIMPLE, "[get ]port of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s port");
+    }
+
     private Expression<AdaptServerSocket> server;
+
+    @Override
+    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
+        this.server = (Expression<AdaptServerSocket>) exprs[0];
+        return true;
+    }
 
     @Override
     protected Integer[] get(final @NotNull Event e) {
@@ -33,12 +45,6 @@ public class ExprServerPort extends SimpleExpression<Integer> {
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
         return "get server's port";
-    }
-
-    @Override
-    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
-        this.server = (Expression<AdaptServerSocket>) exprs[0];
-        return true;
     }
 
 }

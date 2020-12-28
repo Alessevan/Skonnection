@@ -2,6 +2,7 @@ package fr.bakaaless.sksocket.addon.expression;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -14,7 +15,17 @@ import java.net.*;
 
 public class ExprServerCreate extends SimpleExpression<AdaptServerSocket> {
 
+    static {
+        Skript.registerExpression(ExprServerCreate.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "create server[ ][socket] [with port ]%integer%");
+    }
+
     private Expression<Integer> port;
+
+    @Override
+    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
+        port = (Expression<Integer>) exprs[0];
+        return true;
+    }
 
     @Override
     protected AdaptServerSocket[] get(final @NotNull Event e) {
@@ -44,12 +55,6 @@ public class ExprServerCreate extends SimpleExpression<AdaptServerSocket> {
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
         return "create a server socket";
-    }
-
-    @Override
-    public boolean init(final Expression<?> @NotNull [] exprs, final int matchedPattern, final @NotNull Kleenean isDelayed, final SkriptParser.@NotNull ParseResult parseResult) {
-        port = (Expression<Integer>) exprs[0];
-        return true;
     }
 
 }

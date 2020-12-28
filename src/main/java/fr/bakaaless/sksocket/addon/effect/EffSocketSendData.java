@@ -1,5 +1,6 @@
 package fr.bakaaless.sksocket.addon.effect;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -10,8 +11,19 @@ import org.jetbrains.annotations.Nullable;
 
 public class EffSocketSendData extends Effect {
 
+    static {
+        Skript.registerEffect(EffSocketSendData.class, "send data %string% from socket %socket%");
+    }
+
     private Expression<String> data;
     private Expression<AdaptSocket> socket;
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        this.data = (Expression<String>) exprs[0];
+        this.socket = (Expression<AdaptSocket>) exprs[1];
+        return true;
+    }
 
     @Override
     protected void execute(final Event e) {
@@ -27,13 +39,6 @@ public class EffSocketSendData extends Effect {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         return "send data to a server with a stock";
-    }
-
-    @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-        this.data = (Expression<String>) exprs[0];
-        this.socket = (Expression<AdaptSocket>) exprs[1];
-        return true;
     }
 
 }

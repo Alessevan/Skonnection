@@ -1,5 +1,6 @@
 package fr.bakaaless.sksocket.addon.effect;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +12,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class EffSocketDisconnect extends Effect {
 
+    static {
+        Skript.registerEffect(EffSocketDisconnect.class, "disconnect socket %socket%");
+    }
+
     private Expression<AdaptSocket> socket;
 
     @Override
@@ -20,16 +25,16 @@ public class EffSocketDisconnect extends Effect {
     }
 
     @Override
-    public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "disconnect a socket";
-    }
-
-    @Override
     protected void execute(final Event e) {
         final AdaptSocket socket = this.socket.getSingle(e);
         if (socket == null)
             return;
         socket.disconnect();
+    }
+
+    @Override
+    public @NotNull String toString(final @Nullable Event e, final boolean debug) {
+        return "disconnect a socket";
     }
 
 }

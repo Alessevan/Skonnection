@@ -1,5 +1,6 @@
 package fr.bakaaless.sksocket.addon.effect;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +12,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class EffServerDestroy  extends Effect {
 
+    static {
+        Skript.registerEffect(EffServerDisconnect.class, "destroy server[ ][socket] %serversocket%");
+    }
+
     private Expression<AdaptServerSocket> server;
 
     @Override
@@ -20,16 +25,17 @@ public class EffServerDestroy  extends Effect {
     }
 
     @Override
-    public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "destroy a serversocket";
-    }
-
-    @Override
     protected void execute(final Event e) {
         final AdaptServerSocket server = this.server.getSingle(e);
         if (server == null)
             return;
         server.destroy();
     }
+
+    @Override
+    public @NotNull String toString(final @Nullable Event e, final boolean debug) {
+        return "destroy a serversocket";
+    }
+
 
 }

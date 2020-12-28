@@ -18,6 +18,10 @@ import java.util.Objects;
 
 public class EffSocketConnect extends Effect {
 
+    static {
+        Skript.registerEffect(EffSocketConnect.class, "connect socket %clientsocket% to %string%");
+    }
+
     private Expression<AdaptSocket> socket;
     private Expression<String> ip;
 
@@ -26,11 +30,6 @@ public class EffSocketConnect extends Effect {
         this.socket = (Expression<AdaptSocket>) exprs[0];
         this.ip = (Expression<String>) exprs[1];
         return true;
-    }
-
-    @Override
-    public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "connect a socket";
     }
 
     @Override
@@ -57,6 +56,11 @@ public class EffSocketConnect extends Effect {
             Skript.exception(socketException, "Can't join the server").printStackTrace();
         } catch (Exception ignored) {
         }
+    }
+
+    @Override
+    public @NotNull String toString(final @Nullable Event e, final boolean debug) {
+        return "connect a socket";
     }
 
 }

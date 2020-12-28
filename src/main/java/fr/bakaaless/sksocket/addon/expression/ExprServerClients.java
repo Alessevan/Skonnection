@@ -1,6 +1,8 @@
 package fr.bakaaless.sksocket.addon.expression;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -11,7 +13,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ExprServerClients extends SimpleExpression<AdaptClient> {
 
+    static {
+        Skript.registerExpression(ExprServerClients.class, AdaptClient.class, ExpressionType.SIMPLE, "[get ]client[s] of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s client[s]");
+    }
+
     private Expression<AdaptServerSocket> server;
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        this.server = (Expression<AdaptServerSocket>) exprs[0];
+        return true;
+    }
 
     @Nullable
     @Override
@@ -34,11 +46,5 @@ public class ExprServerClients extends SimpleExpression<AdaptClient> {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         return "get all connected clients of a server";
-    }
-
-    @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-        this.server = (Expression<AdaptServerSocket>) exprs[0];
-        return true;
     }
 }

@@ -1,5 +1,6 @@
 package fr.bakaaless.sksocket.addon.effect;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -12,9 +13,22 @@ import org.jetbrains.annotations.Nullable;
 
 public class EffServerSendData extends Effect {
 
+    static {
+        Skript.registerEffect(EffServerSendData.class, "send data %string% from server[ ][socket] %serversocket% [to %clientsocket%]");
+    }
+
     private Expression<String> data;
     private Expression<AdaptServerSocket> server;
     private Expression<AdaptClient> client;
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        this.data = (Expression<String>) exprs[0];
+        this.server = (Expression<AdaptServerSocket>) exprs[1];
+        if (exprs.length > 2)
+            this.client = (Expression<AdaptClient>) exprs[2];
+        return true;
+    }
 
     @Override
     protected void execute(final Event e) {
@@ -38,15 +52,6 @@ public class EffServerSendData extends Effect {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         return "send data to one or all clients of a server";
-    }
-
-    @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-        this.data = (Expression<String>) exprs[0];
-        this.server = (Expression<AdaptServerSocket>) exprs[1];
-        if (exprs.length > 2)
-            this.client = (Expression<AdaptClient>) exprs[2];
-        return true;
     }
 
 }
