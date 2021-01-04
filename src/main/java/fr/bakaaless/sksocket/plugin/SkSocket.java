@@ -5,11 +5,16 @@ import ch.njol.skript.SkriptAddon;
 import fr.bakaaless.sksocket.addon.type.AdaptServerSocket;
 import fr.bakaaless.sksocket.addon.type.AdaptSocket;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.Messenger;
 
 public class SkSocket extends JavaPlugin {
 
     public static SkSocket get() {
         return (SkSocket) JavaPlugin.getProvidingPlugin(SkSocket.class);
+    }
+
+    public static Messenger getMessenger() {
+        return SkSocket.get().getServer().getMessenger();
     }
 
     @Override
