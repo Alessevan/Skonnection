@@ -23,12 +23,12 @@ use Minecraft's plugin messages.
     * `send data %string% from socket %socket%`
     * `disconnect socket %socket%`
     * `destroy socket %socket%`
-    * `send data %string% from server[ ][socket] %serversocket% [to %clientsocket%]`
+    * `send data %string% from server[ ][socket] %serversocket% [(to %clientsocket%)]`
     * `disconnect server[ ][socket] %serversocket%`
     * `destroy server[ ][socket] %serversocket%`
   * Plugin Messages:
     * `register channel %string%`
-    * `send plugin[ ]message %pluginmessage% through [channel] %string% [with %player%]`  
+    * `send plugin[ ]message %pluginmessage% through [channel] %string% [(with %player%)]`  
     * `unregister channel %string%`
 
 
