@@ -13,9 +13,9 @@ use Minecraft's plugin messages.
 
 * Conditions :
   * Sockets:
-    * `%socket%[('s| is)] connect[ed]`
+    * `%socket% [('s| is)] connect[ed]`
   * Plugin Messages:
-    * `%string%[('s| is)] valid [channel]`
+    * `%string% [('s| is)] valid [channel]`
   
 
 * Effets :
