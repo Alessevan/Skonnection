@@ -1,9 +1,9 @@
-name: SkSocket
-main: fr.bakaaless.sksocket.plugin.SkSocket
-version: 1.0.1
-api-version: 1.16
+name: @NAME@
+main: fr.bakaaless.skonnection.plugin.Skonnection
+version: @VERSION@
+api-version: @APIVERSION@
 website: 'https://github.com/BakaAless/SkSocket'
 depend:
   - Skript
-author:
+authors:
   - Aless#6161

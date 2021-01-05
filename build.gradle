@@ -1,10 +1,12 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     id 'java'
     id 'idea'
 }
 
 group 'fr.bakaaless'
-version '1.0.1-SNAPSHOT'
+version '1.1.0-SNAPSHOT'
 
 def spigotVersion = "1.16"
 def subVersion = ".3"
@@ -29,8 +31,8 @@ dependencies {
     implementation group: 'com.github.SkriptLang', name: 'Skript', version: '2.5.3'
 }
 
-jar {
-    archiveName rootProject.name + '.jar'
+processResources {
+    filter ReplaceTokens, tokens: [NAME: rootProject.name, VERSION: version, APIVERSION: spigotVersion]
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
