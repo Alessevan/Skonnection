@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public class EventServerReceiveConnection extends Event implements Cancellable {
 
     static {
-        Skript.registerEvent("Client Attempt To Connect", SimpleEvent.class, EventServerReceiveConnection.class, "[client ]attempt to connect[ on server][ async]");
+        Skript.registerEvent("Client Attempt To Connect", SimpleEvent.class, EventServerReceiveConnection.class, "[client] attempt to connect [on server] [async]");
         EventValues.registerEventValue(EventServerReceiveConnection.class, AdaptServerSocket.class, new Getter<AdaptServerSocket, EventServerReceiveConnection>() {
             @Nullable
             @Override

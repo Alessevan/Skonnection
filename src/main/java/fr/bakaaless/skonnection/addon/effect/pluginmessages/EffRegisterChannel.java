@@ -52,7 +52,7 @@ public class EffRegisterChannel extends Effect {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "register a channel";
+        return "register a channel " + this.channel.toString(e, debug);
     }
 
 }

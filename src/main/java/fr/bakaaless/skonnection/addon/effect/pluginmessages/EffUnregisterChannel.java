@@ -46,7 +46,7 @@ public class EffUnregisterChannel extends Effect {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "unregister a channel";
+        return "unregister a channel " + this.channel.toString(e, debug);
     }
 
 }

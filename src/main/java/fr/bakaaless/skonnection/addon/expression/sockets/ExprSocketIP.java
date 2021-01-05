@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprSocketIP extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprSocketIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of socket %socket%", "[get ]socket %socket%'s ip");
+        Skript.registerExpression(ExprSocketIP.class, String.class, ExpressionType.SIMPLE, "[get] ip of socket %socket%", "[get] socket %socket%'s ip");
     }
 
     private Expression<AdaptSocket> socket;

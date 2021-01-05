@@ -28,7 +28,7 @@ import java.util.Objects;
 public class ExprSocketCreate extends SimpleExpression<AdaptSocket> {
 
     static {
-        Skript.registerExpression(ExprSocketCreate.class, AdaptSocket.class, ExpressionType.SIMPLE, "create [client ]socket [to ]%string%");
+        Skript.registerExpression(ExprSocketCreate.class, AdaptSocket.class, ExpressionType.SIMPLE, "create [client] socket [to] %string%");
     }
 
     private Expression<String> ip;

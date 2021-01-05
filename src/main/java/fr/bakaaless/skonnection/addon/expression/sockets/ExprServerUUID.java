@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprServerUUID extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprServerUUID.class, String.class, ExpressionType.SIMPLE, "[get ]uuid of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s uuid");
+        Skript.registerExpression(ExprServerUUID.class, String.class, ExpressionType.SIMPLE, "[get] uuid of server[ ][socket] %serversocket%", "[get] server[ ][socket] %serversocket%'s uuid");
     }
 
     private Expression<AdaptServerSocket> server;
@@ -52,7 +52,7 @@ public class ExprServerUUID extends SimpleExpression<String> {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "get socket's uuid";
+        return "get " + this.server.toString(e, debug) + "'s uuid";
     }
 
 }

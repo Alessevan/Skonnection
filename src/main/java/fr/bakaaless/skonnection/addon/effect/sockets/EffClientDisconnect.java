@@ -44,6 +44,6 @@ public class EffClientDisconnect extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "disconnect a client";
+        return "disconnect a " + this.client.toString(e, debug);
     }
 }

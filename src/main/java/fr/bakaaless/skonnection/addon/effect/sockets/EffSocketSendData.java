@@ -46,7 +46,7 @@ public class EffSocketSendData extends Effect {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "send data to a server with a stock";
+        return "send data (" + this.data.toString(e, debug) + ") to a server with a " + this.socket.toString(e, debug);
     }
 
 }

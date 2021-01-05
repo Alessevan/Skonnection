@@ -3,7 +3,7 @@
 ## Présentation
 
 ➠  Type : [Skript](https://github.com/SkrptLang/Skript)'s Addon \
-➠  Développer(s) : [All contributors](https://github.com/BakaAless/SkSocket/graphs/contributors)
+➠  Développer(s) : [All contributors](https://github.com/BakaAless/Skonnection/graphs/contributors)
 
 
 ## Description
@@ -13,9 +13,9 @@ use Minecraft's plugin messages.
 
 * Conditions :
   * Sockets:
-    * `%socket%['s| is] connect[ed]`
+    * `%socket%[('s| is)] connect[ed]`
   * Plugin Messages:
-    * `%string%['s| is] valid[ channel]`
+    * `%string%[('s| is)] valid [channel]`
   
 
 * Effets :
@@ -28,37 +28,37 @@ use Minecraft's plugin messages.
     * `destroy server[ ][socket] %serversocket%`
   * Plugin Messages:
     * `register channel %string%`
-    * `send plugin[ ]message %pluginmessage% through [channel ]%string%[ with %player%]`  
+    * `send plugin[ ]message %pluginmessage% through [channel] %string% [with %player%]`  
     * `unregister channel %string%`
 
 
 * Expressions :
   * Sockets:
-    * `create [client ]socket [to ]%string%`
-    * `create server[ ][socket] [with port ]%integer%`
-    * `[get ]uuid of socket %socket%` or `[get ]socket %socket%'s uuid`
-    * `[get ]uuid of server[ ][socket] %serversocket%` or `[get ]server[ ][socket] %serversocket%'s uuid`
-    * `[get ]uuid of client %clientsocket%` or `[get ]client %clientsocket%'s uuid`
-    * `[get ]ip of socket %socket%` or `[get ]socket %socket%'s ip`
-    * `[get ]port of server[ ][socket] %serversocket%` or `[get ]server[ ][socket] %serversocket%'s port`
-    * `[get ]ip of client %clientsocket%` or `[get ]client %clientsocket%'s ip`
-    * `[get ]client[s] of server[ ][socket] %serversocket%` or `[get ]server[ ][socket] %serversocket%'s client[s]`
-    * `[get ]server of client %clientsocket%` or `[get ]client %clientsocket%'s server`
+    * `create [client ]socket [to] %string%`
+    * `create server[ ][socket] [with port] %integer%`
+    * `[get] uuid of socket %socket%` or `[get] socket %socket%'s uuid`
+    * `[get] uuid of server[ ][socket] %serversocket%` or `[get] server[ ][socket] %serversocket%'s uuid`
+    * `[get] uuid of client %clientsocket%` or `[get] client %clientsocket%'s uuid`
+    * `[get] ip of socket %socket%` or `[get] socket %socket%'s ip`
+    * `[get] port of server[ ][socket] %serversocket%` or `[get] server[ ][socket] %serversocket%'s port`
+    * `[get] ip of client %clientsocket%` or `[get] client %clientsocket%'s ip`
+    * `[get] client[s] of server[ ][socket] %serversocket%` or `[get] server[ ][socket] %serversocket%'s client[s]`
+    * `[get] server of client %clientsocket%` or `[get] client %clientsocket%'s server`
   * Plugin Messages:
     * `create pluginmessage`
     * `retrieve %data%`
-    * `[(add|remove) %string% (to|from) ]data of %pluginmessage%`
+    * `data of %pluginmessage%` (can be modified with add and remove)
 
 
 * Events :
   * Sockets:
-    * `socket receive data[ async]` :
+    * `socket receive data [async]` :
       * socket : `event-socket`
       * data : `event-text`
-    * `[client ]attempt to connect[ on server][async]` :
+    * `[client] attempt to connect [on server][async]` :
       * server : `event-serversocket`
       * client : `event-clientsocket`
-    * `server[ ][socket] receive data[ async]` :
+    * `server[ ][socket] receive data [async]` :
       * server : `event-serversocket`
       * client : `event-clientsocket`
       * data : `event-text`

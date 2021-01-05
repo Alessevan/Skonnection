@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class CondChannelValid extends Condition {
 
     static {
-        Skript.registerCondition(CondSocketConnected.class, "%string%[ is|'s] valid[ channel]");
+        Skript.registerCondition(CondSocketConnected.class, "%string% [(is|'s] valid [channel]");
     }
 
     private Expression<String> channel;
@@ -44,8 +44,8 @@ public class CondChannelValid extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, boolean b) {
-        return "is channel valid";
+    public String toString(final @Nullable Event e, boolean debug) {
+        return "is channel " + this.channel.toString(e, debug) + " valid";
     }
 
 }
