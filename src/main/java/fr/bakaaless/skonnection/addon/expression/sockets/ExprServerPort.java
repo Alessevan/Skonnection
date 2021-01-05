@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprServerPort extends SimpleExpression<Integer> {
 
     static {
-        Skript.registerExpression(ExprServerPort.class, Integer.class, ExpressionType.SIMPLE, "[get ]port of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s port");
+        Skript.registerExpression(ExprServerPort.class, Integer.class, ExpressionType.SIMPLE, "[get] port of server[ ][socket] %serversocket%", "[get] server[ ][socket] %serversocket%'s port");
     }
 
     private Expression<AdaptServerSocket> server;
@@ -52,7 +52,7 @@ public class ExprServerPort extends SimpleExpression<Integer> {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "get server's port";
+        return "get " + this.server.toString(e, debug) + "'s port";
     }
 
 }

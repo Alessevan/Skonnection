@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class CondSocketConnected extends Condition {
 
     static {
-        Skript.registerCondition(CondSocketConnected.class, "socket %socket%[ is|'s] connect[ed]");
+        Skript.registerCondition(CondSocketConnected.class, "socket %socket% [(is|'s)] connect[ed]");
     }
 
     private Expression<AdaptSocket> socket;
@@ -41,8 +41,8 @@ public class CondSocketConnected extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, boolean b) {
-        return "socket connected";
+    public String toString(final @Nullable Event e, boolean debug) {
+        return this.socket.toString(e, debug) + " is connected";
     }
 
 

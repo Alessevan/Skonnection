@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class EffSendPluginMessage extends Effect {
 
     static {
-        Skript.registerEffect(EffSendPluginMessage.class, "send plugin[ ]message %pluginmessage% through [channel ]%string%", "send plugin[ ]message %pluginmessage% through [channel ]%string% with %player%");
+        Skript.registerEffect(EffSendPluginMessage.class, "send plugin[ ]message %pluginmessage% through [channel] %string%", "send plugin[ ]message %pluginmessage% through [channel] %string% with %player%");
     }
 
     private Expression<AdaptPluginMessage> pluginMessage;
@@ -58,7 +58,7 @@ public class EffSendPluginMessage extends Effect {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "send plugin message through a registered channel and with an optional player";
+        return "send " + this.pluginMessage.toString(e, debug) + " through a registered channel (" + this.channel.toString(e, debug) + ") and with an optional " + this.player.toString(e, debug);
     }
 
 }

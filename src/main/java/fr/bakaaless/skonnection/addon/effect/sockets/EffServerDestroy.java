@@ -42,7 +42,7 @@ public class EffServerDestroy  extends Effect {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "destroy a serversocket";
+        return "destroy a " + this.server.toString(e, debug);
     }
 
 

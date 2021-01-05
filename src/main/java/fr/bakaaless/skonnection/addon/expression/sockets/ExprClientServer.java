@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprClientServer extends SimpleExpression<AdaptServerSocket> {
 
     static {
-        Skript.registerExpression(ExprClientServer.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "[get ]server of client %clientsocket%", "[get ]client %clientsocket%'s server");
+        Skript.registerExpression(ExprClientServer.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "[get] server of client %clientsocket%", "[get] client %clientsocket%'s server");
     }
 
     private Expression<AdaptClient> client;
@@ -54,7 +54,7 @@ public class ExprClientServer extends SimpleExpression<AdaptServerSocket> {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "get client's server";
+        return "get " + this.client.toString(e, debug) + "'s server";
     }
 
 }

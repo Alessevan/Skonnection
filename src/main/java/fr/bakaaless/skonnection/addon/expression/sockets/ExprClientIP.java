@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprClientIP extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprClientIP.class, String.class, ExpressionType.SIMPLE, "[get ]ip of client %clientsocket%", "[get ]client %clientsocket%'s ip");
+        Skript.registerExpression(ExprClientIP.class, String.class, ExpressionType.SIMPLE, "[get] ip of client %clientsocket%", "[get] client %clientsocket%'s ip");
     }
 
     private Expression<AdaptClient> client;
@@ -54,7 +54,7 @@ public class ExprClientIP extends SimpleExpression<String> {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "get client's ip";
+        return "get " + this.client.toString(e, debug) + "'s ip";
     }
 
 }

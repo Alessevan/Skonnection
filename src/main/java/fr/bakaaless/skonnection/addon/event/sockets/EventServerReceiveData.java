@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public class EventServerReceiveData extends Event {
 
     static {
-        Skript.registerEvent("ServerSocket Receive Data", SimpleEvent.class, EventServerReceiveData.class, "server[ ][socket] receive data[ async]");
+        Skript.registerEvent("ServerSocket Receive Data", SimpleEvent.class, EventServerReceiveData.class, "server[ ][socket] receive data [async]");
         EventValues.registerEventValue(EventServerReceiveData.class, AdaptServerSocket.class, new Getter<AdaptServerSocket, EventServerReceiveData>() {
             @Nullable
             @Override

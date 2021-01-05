@@ -60,7 +60,7 @@ public class EffServerSendData extends Effect {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "send data to one or all clients of a server";
+        return "send data (" + this.data.toString() + ") to one or all clients of a " + this.server.toString(e, debug);
     }
 
 }

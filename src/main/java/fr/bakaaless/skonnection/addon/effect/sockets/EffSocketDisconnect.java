@@ -42,7 +42,7 @@ public class EffSocketDisconnect extends Effect {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "disconnect a socket";
+        return "disconnect a " + this.socket.toString(e, debug);
     }
 
 }

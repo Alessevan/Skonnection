@@ -24,7 +24,7 @@ import java.net.ServerSocket;
 public class ExprServerCreate extends SimpleExpression<AdaptServerSocket> {
 
     static {
-        Skript.registerExpression(ExprServerCreate.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "create server[ ][socket] [with port ]%integer%");
+        Skript.registerExpression(ExprServerCreate.class, AdaptServerSocket.class, ExpressionType.SIMPLE, "create server[ ][socket] [with port] %integer%");
     }
 
     private Expression<Integer> port;

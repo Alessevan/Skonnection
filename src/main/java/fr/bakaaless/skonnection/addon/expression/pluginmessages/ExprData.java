@@ -100,7 +100,7 @@ public class ExprData extends SimpleExpression<String> {
 
     @Override
     public String toString(Event e, boolean debug) {
-        return "retrive " + data.toString(e, debug);
+        return "retrive " + this.data.toString(e, debug);
     }
 
 }

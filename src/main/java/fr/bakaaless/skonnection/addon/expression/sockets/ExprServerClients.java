@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprServerClients extends SimpleExpression<AdaptClient> {
 
     static {
-        Skript.registerExpression(ExprServerClients.class, AdaptClient.class, ExpressionType.SIMPLE, "[get ]client[s] of server[ ][socket] %serversocket%", "[get ]server[ ][socket] %serversocket%'s client[s]");
+        Skript.registerExpression(ExprServerClients.class, AdaptClient.class, ExpressionType.SIMPLE, "[get] client[s] of server[ ][socket] %serversocket%", "[get] server[ ][socket] %serversocket%'s client[s]");
     }
 
     private Expression<AdaptServerSocket> server;
@@ -55,6 +55,6 @@ public class ExprServerClients extends SimpleExpression<AdaptClient> {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "get all connected clients of a server";
+        return "get all connected clients of a " + this.server.toString(e, debug);
     }
 }

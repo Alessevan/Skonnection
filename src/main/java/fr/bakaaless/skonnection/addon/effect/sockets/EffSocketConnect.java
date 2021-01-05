@@ -69,7 +69,7 @@ public class EffSocketConnect extends Effect {
 
     @Override
     public @NotNull String toString(final @Nullable Event e, final boolean debug) {
-        return "connect a socket";
+        return "connect a " + this.socket.toString(e, debug) + " on ip " + this.ip.toString(e, debug);
     }
 
 }

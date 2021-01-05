@@ -101,7 +101,7 @@ public class ExprPluginMessageData extends SimpleExpression<String> {
 
     @Override
     public String toString(Event e, boolean debug) {
-        return "data of " + pluginMessage.toString(e, debug);
+        return "data of " + this.pluginMessage.toString(e, debug);
     }
 
 }
