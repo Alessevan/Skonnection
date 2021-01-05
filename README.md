@@ -1,4 +1,4 @@
-# SkSocket
+# SkSocket - DEPRECATED
 
 ## Présentation
 
