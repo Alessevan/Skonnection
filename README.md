@@ -2,13 +2,13 @@
 
 ## Présentation
 
-➠  Type : [Skript](https://github.com/SkrptLang/Skript)'s Addon \
+➠  Type : [Skript](https://github.com/SkriptLang/Skript)'s Addon \
 ➠  Développer(s) : [All contributors](https://github.com/BakaAless/Skonnection/graphs/contributors)
 
 
 ## Description
 
-➠  This plugin is a [Skript](https://github.com/SkrptLang/Skript)'s addon to use java Socket, create ServerSocket and
+➠  This plugin is a [Skript](https://github.com/SkriptLang/Skript)'s addon to use java Socket, create ServerSocket and
 use Minecraft's plugin messages.
 
 * Conditions :
