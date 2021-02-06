@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class CondChannelValid extends Condition {
 
     static {
-        Skript.registerCondition(CondSocketConnected.class, "%string% [(is|'s] valid [channel]");
+        Skript.registerCondition(CondSocketConnected.class, "%string%('s| is) valid [channel]");
     }
 
     private Expression<String> channel;
