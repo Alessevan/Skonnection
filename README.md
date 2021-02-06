@@ -18,7 +18,7 @@ use Minecraft's plugin messages.
     * `%string% [('s| is)] valid [channel]`
   
 
-* Effets :
+* Effects :
   * Sockets :
     * `send data %string% from socket %socket%`
     * `disconnect socket %socket%`
@@ -48,6 +48,9 @@ use Minecraft's plugin messages.
     * `create pluginmessage`
     * `retrieve %data%`
     * `data of %pluginmessage%` (can be modified with add and remove)
+  * Encryption:
+    * `[aes] encrypt %text% with [key] %text%`
+    * `[aes] decrypt %text% with [key] %text%`
 
 
 * Events :

@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class CondSocketConnected extends Condition {
 
     static {
-        Skript.registerCondition(CondSocketConnected.class, "socket %socket% [(is|'s)] connect[ed]");
+        Skript.registerCondition(CondSocketConnected.class, "socket %socket%('s| is) connect[ed]");
     }
 
     private Expression<AdaptSocket> socket;
